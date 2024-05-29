@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Clock</title>
+    <style>
+        .clock {
+            font-size: 55px;
+            text-align: center;
+            margin-top: 50px;
+            animation: fade 2s infinite alternate;
+            border-width: 5px;
+            border: 1px solid red;
+            border-width: 5px;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            margin-left: 150px;
+            margin-right: 150px;
+            margin-top: 250px;
+            background-color: aqua;
+            border-radius: 200px;
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock" id="time"></div>
+    <script>
+        function updateTime() {
+            let now = new Date();
+            var hours = String(now.getHours()).padStart(2, '0');
+            var minutes = String(now.getMinutes()).padStart(2, '0');
+            var seconds = String(now.getSeconds()).padStart(2, '0');
+            var timeString = `${ hours }: ${ minutes }: ${ seconds }`;
+            document.getElementById('time').textContent = timeString;
+
+            if (seconds === '00') {
+                alert("skwela na kay gina lockdown pata!");
+            }
+        }
+
+        setInterval(updateTime, 1000);
+
+        updateTime();
+    </script>
+</body>
+
+</html>

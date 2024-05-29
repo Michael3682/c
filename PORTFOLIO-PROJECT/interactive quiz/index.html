@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        * {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+
+        .container {
+            background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+            border: 1px solid white;
+            border-radius: 10px;
+            max-width: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 100px;
+            padding: 40px;
+            text-align: center;
+
+            & #question {
+                font-size: xx-large;
+            }
+
+            & #answers {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+                transition: all .2s;
+
+                &:hover button:not(:hover) {
+                    filter: blur(1px);
+                    transform: scale(.9);
+                }
+            }
+
+            & button {
+                padding: 10px 20px;
+                margin-top: 10px;
+                cursor: pointer;
+                border-radius: 10px;
+                border: none;
+                transition: all .2s;
+
+                &:hover {
+                    filter: brightness(.8);
+                    transform: scale(1.1);
+                }
+
+                &:active {
+                    transform: scale(.9);
+                }
+            }
+
+            & #submitBtn {
+                background-color: rgb(53, 231, 53);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="question"></div>
+        <div id="answers"></div>
+        <button id="submitBtn">Submit</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the capital of France?",
+                answers: ["London", "Paris", "Rome", "Berlin"],
+                correctAnswer: "Paris"
+            },
+            {
+                question: "What is the largest planet in our solar system?",
+                answers: ["Mars", "Jupiter", "Saturn", "Earth"],
+                correctAnswer: "Jupiter"
+            },
+            {
+                question: "What is the powerhouse of the cell?",
+                answers: ["Mitochondria", "Nucleus", "Ribosome", "Chloroplast"],
+                correctAnswer: "Mitochondria"
+            }
+        ];
+
+        const questionContainer = document.getElementById('question');
+        const answerContainer = document.getElementById('answers');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultContainer = document.getElementById('result');
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const currentQuiz = questions[currentQuestion];
+            questionContainer.textContent = currentQuiz.question;
+            answerContainer.innerHTML = '';
+            currentQuiz.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.textContent = answer;
+                button.classList.add('answer-btn');
+                button.addEventListener('click', () => checkAnswer(answer));
+                answerContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(answer) {
+            const currentQuiz = questions[currentQuestion];
+            if (answer === currentQuiz.correctAnswer) {
+                score++;
+            }
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            resultContainer.textContent = `Your score: ${score} out of ${questions.length}`;
+            submitBtn.style.display = 'none';
+        }
+
+        loadQuestion();
+
+    </script>
+</body>
+
+</html>
